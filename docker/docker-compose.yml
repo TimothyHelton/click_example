@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+
+  nginx:
+    container_name: click_example_nginx
+    image: nginx:alpine
+    ports:
+      - 8080:80
+    restart: always
+    volumes:
+      - ../docs/_build/html:/usr/share/nginx/html:ro
+
+  postgres:
+    container_name: click_example_postgres
+    image: postgres:alpine
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+    ports:
+      - 5432:5432
+    restart: always
+    volumes:
+      - click_example-db:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: click_example_pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    external_links:
+      - click_example_postgres:click_example_postgres
+    ports:
+      - 5000:80
+
+  python:
+    container_name: click_example_python
+    build:
+      context: ..
+      dockerfile: docker/python-Dockerfile
+    image: click_example_python
+    restart: always
+    tty: true
+    volumes:
+      - ..:/usr/src/click_example
+
+volumes:
+  click_example-db:
+

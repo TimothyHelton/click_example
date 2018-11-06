@@ -1,0 +1,26 @@
+FROM python:3.6
+
+WORKDIR /usr/src/click_example
+
+COPY . .
+
+RUN cd /opt \
+	&& apt-get update \
+	&& apt-get install -y \
+		protobuf-compiler \
+	&& rm -rf /var/lib/apt/lists/* \
+	&& git clone \
+		--branch master \
+		--single-branch \
+		--depth 1 \
+		https://github.com/tensorflow/models.git \
+	&& cd /opt/models/research \
+	&& protoc object_detection/protos/*.proto --python_out=. \
+	&& cd /usr/src/click_example \
+	&& pip install --upgrade pip \
+	&& pip install --no-cache-dir -r requirements.txt \
+	&& pip install -e .[docs,notebook,tf-cpu,test]
+
+ENV PYTHONPATH $PYTHONPATH:/opt/models/research:/opt/models/research/slim:/opt/models/research/object_detection
+
+CMD [ "/bin/bash" ]

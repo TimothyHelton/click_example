@@ -1,0 +1,15 @@
+FROM python:3.6-alpine
+
+WORKDIR /usr/src/click_example
+
+COPY . .
+
+RUN apk add --update \
+		alpine-sdk \
+		bash \
+	&& pip3 install --upgrade pip \
+	&& pip3 install --no-cache-dir -r requirements.txt \
+	&& pip3 install -e .[docs,notebook,test]
+
+CMD [ "/bin/bash" ]
+
