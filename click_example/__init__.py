@@ -4,7 +4,7 @@
 from pkg_resources import get_distribution, DistributionNotFound
 import os.path as osp
 
-# from . import cli
+from . import cli
 # from . import EnterModuleNameHere
 
 __version__ = '0.1.0'

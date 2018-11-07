@@ -45,6 +45,7 @@ setup(
         ]
     ),
     install_requires=[
+        'click',
         ],
     extras_require={
         'docs': ['sphinx', 'sphinx_rtd_theme'],
@@ -55,7 +56,7 @@ setup(
     include_package_data=True,
     entry_points={
         'console_scripts': [
-            # '<EnterCommandName>=click_example.cli:<EnterFunction>',
+            'count=click_example.cli:count',
         ]
     }
 )
