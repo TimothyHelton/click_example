@@ -17,7 +17,7 @@ import click
 @click.option('-v', '--verbose', is_flag=True, multiple=True)
 def count(number: int, quiet, verbose):
     """
-    Display progressbar while counting to a user provided number.
+    Display progressbar while counting to the user provided integer NUMBER.
     """
     click.clear()
     logging_level = logging.INFO + 10 * len(quiet) - 10 * len(verbose)
