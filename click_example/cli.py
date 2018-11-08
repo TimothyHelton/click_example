@@ -13,8 +13,10 @@ import click
 
 @click.command()
 @click.argument('number')
-@click.option('-q', '--quiet', is_flag=True, multiple=True)
-@click.option('-v', '--verbose', is_flag=True, multiple=True)
+@click.option('-q', '--quiet', is_flag=True, multiple=True,
+              help='Decrease output level one (-q) or multiple times (-qqq).')
+@click.option('-v', '--verbose', is_flag=True, multiple=True,
+              help='Increase output level one (-v) or multiple times (-vvv).')
 def count(number: int, quiet, verbose):
     """
     Display progressbar while counting to the user provided integer NUMBER.
